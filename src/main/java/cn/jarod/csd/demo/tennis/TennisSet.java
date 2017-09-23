@@ -35,10 +35,10 @@ public class TennisSet {
             return "Deuce";
         }
         if (server.isAdvantage(receiver)) {
-            return server.advPlayer(receiver).getName() + ADV;
+            return server.getAdvPlayerName(receiver) + ADV;
         }
         if (server.isOverDeuceScore(receiver)) {
-            return server.advPlayer(receiver).getName() + WIN;
+            return server.getAdvPlayerName(receiver) + WIN;
         }
         return scoreArr[server.getScore()] + " " + scoreArr[receiver.getScore()];
     }

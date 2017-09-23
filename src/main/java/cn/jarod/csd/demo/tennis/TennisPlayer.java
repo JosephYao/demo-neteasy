@@ -6,7 +6,7 @@ public class TennisPlayer {
 
     private static final int DEUCE_SCORE = 3;
     private static final int WIN_SCORE = 2;
-    private String name;
+    private final String name;
 
     private int score;
 
@@ -26,18 +26,11 @@ public class TennisPlayer {
         score ++;
     }
 
-    public TennisPlayer advPlayer(TennisPlayer another) {
+    private TennisPlayer advPlayer(TennisPlayer another) {
         if (score > another.score)
             return this;
         else
             return another;
-    }
-
-    public TennisPlayer unAdvPlayer(TennisPlayer another) {
-        if (score > another.score)
-            return another;
-        else
-            return this;
     }
 
     public boolean isOverDeuceScore(TennisPlayer another) {
@@ -48,11 +41,22 @@ public class TennisPlayer {
         return score == another.score && score < DEUCE_SCORE;
     }
 
-    boolean isDeuce(TennisPlayer another) {
+    public boolean isDeuce(TennisPlayer another) {
         return score == another.score;
     }
 
     public boolean isAdvantage(TennisPlayer another) {
-        return isOverDeuceScore(another) && advPlayer(another).score - unAdvPlayer(another).score < WIN_SCORE;
+        return isOverDeuceScore(another) && advDiffScore(another) < WIN_SCORE;
+    }
+
+    private int advDiffScore(TennisPlayer another) {
+        if (score > another.score)
+            return score - another.score;
+        else
+            return another.score - score;
+    }
+
+    public String getAdvPlayerName(TennisPlayer receiver) {
+        return advPlayer(receiver).getName();
     }
 }
