@@ -17,22 +17,41 @@ public class TennisSet {
     }
 
 
-    private String[] scoreArr = {"Love","Fifteen","Thirty","Forty"};
+    private String[] scoreArr = {"Love", "Fifteen", "Thirty", "Forty", "Win"};
 
-    private TennisSet(String serverName, String receiverName){
+    private TennisSet(String serverName, String receiverName) {
         server = new TennisPlayer(serverName);
         receiver = new TennisPlayer(receiverName);
     }
 
 
     public String printScore() {
-        if (server.getScore() == receiver.getScore() )
-            return (server.getScore() < Contants.DEUCE_SCORE) ? scoreArr[server.getScore()] + Contants.ALL : Contants.DEUCE;
-        return overDeuceScoreOrNot() ? getAdvPlayerName() + (Math.abs(server.getScore() - receiver.getScore()) <  Contants.SET_WIN_SCORE ? Contants.ADV: Contants.WIN_STR) : scoreArr[server.getScore()]+" "+scoreArr[receiver.getScore()];
+        if (server.getScore() == receiver.getScore() && server.getScore() < DEUCE_SCORE) {
+            return scoreArr[server.getScore()] + " All";
+        }
+        if (server.getScore() == receiver.getScore()) {
+            return "Deuce";
+        }
+        if (overDeuceScoreOrNot(server, receiver) && advPlayer.getScore() - unAdvPlayer.getScore() < WIN_SCORE) {
+            return advPlayer.getName() + ADV;
+        }
+        if (overDeuceScoreOrNot(server, receiver)) {
+            return advPlayer.getName() + WIN;
+        }
+        return scoreArr[server.getScore()] + " " + scoreArr[receiver.getScore()];
     }
 
-    private boolean overDeuceScoreOrNot() {
-        if (server.getScore() >  Contants.DEUCE_SCORE || receiver.getScore() > Contants.DEUCE_SCORE ) return true;
+    private boolean overDeuceScoreOrNot(TennisPlayer server, TennisPlayer receiver) {
+        if (server.getScore() > receiver.getScore()) {
+            advPlayer = server;
+            unAdvPlayer = receiver;
+        } else {
+            advPlayer = receiver;
+            unAdvPlayer = server;
+        }
+        if (advPlayer.getScore() > DEUCE_SCORE) {
+            return true;
+        }
         return false;
     }
 
@@ -42,6 +61,6 @@ public class TennisSet {
 
 
     public static TennisSet createSet(String serverName, String receiverName) {
-        return new TennisSet( serverName, receiverName);
+        return new TennisSet(serverName, receiverName);
     }
 }
