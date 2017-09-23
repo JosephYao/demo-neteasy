@@ -27,10 +27,7 @@ public class TennisPlayer {
     }
 
     private TennisPlayer advPlayer(TennisPlayer another) {
-        if (score > another.score)
-            return this;
-        else
-            return another;
+        return score > another.score ? this : another;
     }
 
     public boolean isOverDeuceScore(TennisPlayer another) {
@@ -50,10 +47,7 @@ public class TennisPlayer {
     }
 
     private int advDiffScore(TennisPlayer another) {
-        if (score > another.score)
-            return score - another.score;
-        else
-            return another.score - score;
+        return score > another.score ? score - another.score : another.score - score;
     }
 
     public String getAdvPlayerName(TennisPlayer receiver) {
