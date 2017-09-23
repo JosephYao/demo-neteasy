@@ -1,8 +1,10 @@
 package cn.jarod.csd.demo.tennis;
 
-import cn.jarod.csd.demo.Contants;
-
 public class TennisSet {
+
+    public static final String WIN = " Win";
+
+    public static final String ADV = " Adv";
 
     private TennisPlayer receiver;
 
@@ -26,39 +28,19 @@ public class TennisSet {
 
 
     public String printScore() {
-        if (server.getScore() == receiver.getScore() && server.getScore() < DEUCE_SCORE) {
+        if (server.isSamePoint(receiver)) {
             return scoreArr[server.getScore()] + " All";
         }
-        if (server.getScore() == receiver.getScore()) {
+        if (server.isDeuce(receiver)) {
             return "Deuce";
         }
-        if (overDeuceScoreOrNot(server, receiver) && advPlayer(server, receiver).getScore() - unAdvPlayer(server, receiver).getScore() < WIN_SCORE) {
-            return advPlayer(server, receiver).getName() + ADV;
+        if (server.isAdvantage(receiver)) {
+            return server.advPlayer(receiver).getName() + ADV;
         }
-        if (overDeuceScoreOrNot(server, receiver)) {
-            return advPlayer(server, receiver).getName() + WIN;
+        if (server.isOverDeuceScore(receiver)) {
+            return server.advPlayer(receiver).getName() + WIN;
         }
         return scoreArr[server.getScore()] + " " + scoreArr[receiver.getScore()];
-    }
-
-    private TennisPlayer advPlayer(TennisPlayer server, TennisPlayer receiver) {
-        if (server.getScore() > receiver.getScore()) {
-            return server;
-        } else {
-            return receiver;
-        }
-    }
-
-    private TennisPlayer unAdvPlayer(TennisPlayer server, TennisPlayer receiver) {
-        if (server.getScore() > receiver.getScore()) {
-            return receiver;
-        } else {
-            return server;
-        }
-    }
-
-    private boolean overDeuceScoreOrNot(TennisPlayer server, TennisPlayer receiver) {
-        return advPlayer(server, receiver).getScore() > DEUCE_SCORE;
     }
 
     public static TennisSet createSet(String serverName, String receiverName) {

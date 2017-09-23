@@ -4,6 +4,8 @@ import cn.jarod.csd.demo.Contants;
 
 public class TennisPlayer {
 
+    private static final int DEUCE_SCORE = 3;
+    private static final int WIN_SCORE = 2;
     private String name;
 
     private int score;
@@ -16,32 +18,41 @@ public class TennisPlayer {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getScore() {
         return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     public void playerGetPoint(){
         score ++;
     }
 
-    public boolean isThisPlayer(String _name){
-        return name.equals(_name)? true : false;
+    public TennisPlayer advPlayer(TennisPlayer another) {
+        if (score > another.score)
+            return this;
+        else
+            return another;
     }
 
-    private boolean isWinMatch(int score, int antherScore) {
-        return score > Contants.TIE_BREAK || (score == Contants.TIE_BREAK && antherScore < Contants.NEED_7);
+    public TennisPlayer unAdvPlayer(TennisPlayer another) {
+        if (score > another.score)
+            return another;
+        else
+            return this;
     }
 
-    public String getMatchNameString(int antherscore) {
-        return isWinMatch(score, antherscore)? name + Contants.WIN_STR : name;
+    public boolean isOverDeuceScore(TennisPlayer another) {
+        return advPlayer(another).score > DEUCE_SCORE;
     }
 
+    public boolean isSamePoint(TennisPlayer another) {
+        return score == another.score && score < DEUCE_SCORE;
+    }
+
+    boolean isDeuce(TennisPlayer another) {
+        return score == another.score;
+    }
+
+    public boolean isAdvantage(TennisPlayer another) {
+        return isOverDeuceScore(another) && advPlayer(another).score - unAdvPlayer(another).score < WIN_SCORE;
+    }
 }
