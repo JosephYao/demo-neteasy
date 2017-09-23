@@ -4,21 +4,11 @@ import cn.jarod.csd.demo.tennis.TennisSet;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.IntStream;
 
 public class TennisSetTest {
 
     public TennisSet tennisSet = TennisSet.createSet("Joseph","91");
-
-
-    Map<String,String> m = new HashMap<String,String>(){
-         {
-             m.put("server","Joseph");
-             m.put("reciever","91");
-         }
-    };
 
 
     private void getPlayerPoint(int serverPoint, int receiverPoint) {

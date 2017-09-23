@@ -53,4 +53,16 @@ public class TennisPlayer {
     public String getAdvPlayerName(TennisPlayer receiver) {
         return advPlayer(receiver).getName();
     }
+
+    public boolean isThisPlayer(String _name){
+        return name.equals(_name)? true : false;
+    }
+
+    private boolean isWinMatch(int score, int antherScore) {
+        return score > Contants.TIE_BREAK || (score == Contants.TIE_BREAK && antherScore < Contants.NEED_7);
+    }
+
+    public String getMatchNameString(int antherscore) {
+        return isWinMatch(score, antherscore)? name + Contants.WIN_STR : name;
+    }
 }

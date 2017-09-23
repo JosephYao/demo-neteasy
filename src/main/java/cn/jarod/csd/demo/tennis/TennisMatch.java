@@ -29,7 +29,7 @@ public class TennisMatch {
 
     public String printMatch() {
         for (String name : winPlayer) takeSetResult(name);
-        return server.getMatchNameString(receiver.getScore()) + " (" + server.getScore() + ":" + receiver.getScore() + receiver.getMatchNameString(receiver.getScore()) + ") ";
+        return server.getMatchNameString(receiver.getScore()) + " (" + server.getScore() + ":" + receiver.getScore() + ") " + receiver.getMatchNameString(receiver.getScore());
     }
 
 
